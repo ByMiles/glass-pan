@@ -1,0 +1,15 @@
+<h4>Send and receive Packets</h4>
+<label>Interface: {{localInterface}} </label><br>
+<label>all-rpl-router: {{multicastRpl}}</label><br>
+<label>all-coAp-devices: {{multicastCoAp}}</label><br>
+<label>mode: {{mode}}</label>
+<br>
+<div class="container">
+  <app-lpan-send class="leftItem"
+                 [macId]="macId"
+                 [isDemo]="isDemo">
+  </app-lpan-send>
+  <app-lpan-receive class="rightItem"
+                    [macId]="macId"
+                    [isDemo]="isDemo"></app-lpan-receive>
+</div>

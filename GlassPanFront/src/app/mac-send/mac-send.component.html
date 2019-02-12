@@ -1,0 +1,26 @@
+<h6>Send Frames</h6>
+<label>Pan ID:
+  <input name="panId" type="number" min="0" max="65354" step="1" [(ngModel)]="destPanId">
+</label><br>
+<label>Address:
+  <input name="address" type="number" min="0" max="65354" step="1" [(ngModel)]="destAddress">
+</label><br>
+<label>Bodies:</label><br>
+<div *ngFor="let body of bodies">
+  <label><input type="text" size="100" [(ngModel)]="body"></label>
+</div>
+<button name="addFrame" (click)="addBody()">Add Frame</button>
+<button name="sendFrames" (click)="sendFrames()">Send</button><br>
+<label> Status: {{failedStatus}}</label><br>
+<ul>
+  <li *ngFor="let frameSet of frames">
+    <div *ngIf="frameSet.length > 0">
+      <label>{{frameSet[0].destPanId}} {{frameSet[0].destAddress}}</label>
+      <ul>
+        <li *ngFor="let frame of frameSet">
+          <label>{{frame.data}}</label>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>

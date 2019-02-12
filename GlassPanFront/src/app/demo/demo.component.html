@@ -1,0 +1,29 @@
+<h4>Supported connections</h4>
+<ng-container *ngFor="let link of connections |keyvalue">
+  <label>
+    {{link.key}} Q
+    <input type="number"
+           min="0"
+           max="255"
+           step="1"
+           [(ngModel)]="link.value">
+  </label>
+  <button (click)="removeConnection(link.key)">
+    X
+  </button>
+  <br>
+</ng-container>
+<h4>Add connection</h4>
+<label>Channel:
+  <input name="channel" type="number" min="11" max="26" step="1" [(ngModel)]="header.channel">
+</label><br>
+<label>Pan ID:
+  <input name="panId" type="number" min="0" max="65354" step="1" [(ngModel)]="header.panId">
+</label><br>
+<label>Source address:
+  <input name="address" type="number" min="0" max="65354" step="1" [(ngModel)]="header.linkSource">
+</label><br>
+<label>Source address:
+  <input name="address" type="number" min="0" max="65354" step="1" [(ngModel)]="header.linkDestination">
+</label><br>
+<button name="addDemoConnection" (click)="addConnection()">Add</button><br>

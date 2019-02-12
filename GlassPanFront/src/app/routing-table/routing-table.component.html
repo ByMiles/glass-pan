@@ -1,0 +1,102 @@
+<h6>RoutingTable</h6>
+<table>
+  <tr>
+    <th>
+     Root-Address
+    </th>
+    <th>
+     Child-Address
+    </th>
+    <th>
+      Root-Link
+    </th>
+    <th>
+      Child-Link
+    </th>
+    <th>
+     Rank
+    </th>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      2
+    </td>
+    <td>
+      3
+    </td>
+    <td>
+      4
+    </td>
+    <td>
+      5
+    </td>
+  </tr>
+  <tr *ngFor="let entry of rootEntries">
+    <td>
+      {{entry.rootAddress}}
+    </td>
+    <td>
+      {{entry.childAddress}}
+    </td>
+    <td>
+      -
+    </td>
+    <td>
+      {{entry.linkHeaderToChild.linkDestination}}
+    </td>
+    <td>
+      {{entry.rankHigh}}
+    </td>
+  </tr>
+  <tr *ngFor="let entry of parentEntries">
+    <td>
+      {{entry.rootAddress}}
+    </td>
+    <td>
+      {{entry.childAddress}}
+    </td>
+    <td>
+      {{entry.linkHeaderToRoot.linkDestination}}
+    </td>
+    <td>
+      {{entry.linkHeaderToChild.linkDestination}}
+    </td>
+    <td>
+      {{entry.rankHigh}}
+    </td>
+  </tr>
+  <tr *ngFor="let entry of childEntries">
+    <td>
+      {{entry.rootAddress}}
+    </td>
+    <td>
+      {{entry.childAddress}}
+    </td>
+    <td>
+      {{entry.linkHeaderToRoot.linkDestination}}
+    </td>
+    <td>
+      -
+    </td>
+    <td>
+      {{entry.rankHigh}}
+    </td>
+  </tr>
+</table>
+<h6>Neighbour qualities</h6>
+<table>
+  <tr>
+    <th>link address</th>
+    <th>qualities</th>
+  </tr>
+  <ng-container *ngFor="let neighbour of neighbours | keyvalue">
+    <tr>
+      <td>{{neighbour.key}}</td>
+      <td>{{neighbour.value.toLocaleString()}}</td>
+    </tr>
+  </ng-container>
+
+</table>

@@ -1,0 +1,36 @@
+<app-url></app-url>
+<h4>Start a new device</h4>
+<label>Demo: <input type="checkbox" [(ngModel)]="startAsDemo"></label><br>
+<label>Channel:
+  <input name="channel" type="number" min="11" max="26" step="1" [(ngModel)]="macId.channel">
+</label><br>
+<label>Pan ID:
+  <input name="panId" type="number" min="0" max="65354" step="1" [(ngModel)]="macId.panId">
+</label><br>
+<label>Address:
+  <input name="address" type="number" min="0" max="65354" step="1" [(ngModel)]="macId.address">
+</label><br>
+<ng-container *ngIf="!startAsDemo">
+  <ng-container *ngIf="macId.address != null && macId.panId != null && macId.channel != null">
+    <button name="startMac" (click)="start()">Start</button>
+    <br>
+    <label>Status: {{status}}</label>
+    <br>
+    <h4>Wired Devices</h4>
+    <ng-container *ngFor="let aMacId of macIds">
+      <app-serial [macId]="aMacId">
+      </app-serial>
+    </ng-container>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="startAsDemo">
+  <a target="_blank"
+  [routerLink]="['lpan/', macId.channel, macId.panId, macId.address, 'demo']">
+    transform, send and receive ip-packets
+  </a>
+  <a target="_blank"
+     [routerLink]="['p2p/', macId.channel, macId.panId, macId.address, 'demo']">
+    explore rpl point to point discovery
+  </a>
+  <app-demo></app-demo>
+</ng-container>
