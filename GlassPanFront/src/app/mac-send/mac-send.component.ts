@@ -19,8 +19,8 @@ export class MacSendComponent implements OnInit {
   failedStatus: string;
   bodies: string[];
   testCount = 0;
-  private destPanId: number;
-  private destAddress: number;
+  destPanId: number;
+  destAddress: number;
 
   constructor(private sendService: MacSendService) {
     this.frames = [];
