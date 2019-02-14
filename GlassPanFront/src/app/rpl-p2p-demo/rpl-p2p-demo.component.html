@@ -1,0 +1,46 @@
+<h4>RPL-P2P-Demo</h4>
+<label>
+  Address:
+  {{addressStub}}
+  <input type="text"
+         size="4"
+         (keyup)="onTargetChange()"
+         [(ngModel)]="significant">
+</label>
+<label>Port: {{demoPort}}</label>
+<br>
+<label>
+  Message:
+  <br>
+  <textarea rows="4" cols="50" maxlength="1000"
+            [(ngModel)]="message">
+  </textarea>
+</label>
+<button (click)="sendDatagram()">Send</button>
+<br>
+<app-routing-table></app-routing-table>
+<h6>Sent Log</h6>
+<ul>
+  <li *ngFor="let response of responseLog">
+    {{response}}
+  </li>
+</ul>
+<br>
+<h6>Received messages</h6>
+{{indicationLog.length}}
+<ul>
+  <li *ngFor="let indication of indicationLog">
+    <label>
+      Source:
+      {{indication.source}}
+    </label>
+    <br>
+    <label>
+      Message:
+      <br>
+      <textarea rows="4" cols="50" maxlength="1000" readonly>
+{{indication.message}}
+  </textarea>
+    </label>
+  </li>
+</ul>

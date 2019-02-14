@@ -1,0 +1,48 @@
+<h6>new packet</h6>
+<label>Select scope:</label><br>
+<label>unicast
+  <input type="radio"
+         name="castType"
+         [(ngModel)]="isUnicast"
+         [value]="true"
+         (input)="updateAddress()"
+         checked
+  >
+</label>
+<label>multicast
+  <input type="radio"
+         name="castType"
+         [(ngModel)]="isUnicast"
+         [value]="false"
+         (input)="updateAddress()">
+</label>
+<br>
+<label>Linked destination:
+  <input type="number"
+         maxlength="5"
+         min="1"
+         max="65534"
+         [(ngModel)]="linkHeader.linkDestination">
+</label>
+<br>
+<app-ip-packet
+  [isNew]="true"
+  [packet]="newPacket"
+[unicast]="isUnicast">
+</app-ip-packet>
+<br>
+<button (click)="tryTransformToFrames()">transform</button>
+<button (click)="tryTransformAndSend()">transform + send</button>
+<br>
+<label>Status: {{transformResponse}}</label>
+<h6>Frames ready to send</h6>
+<ng-container *ngIf="framesReady">
+  <button (click)="trySendFrames()">Send</button>
+</ng-container>
+<h6>Last transformed Packet</h6>
+<ng-container *ngIf="lastPacket != null">
+  <app-ip-packet
+  [packet]="lastPacket"
+  [isNew]="false">
+  </app-ip-packet>
+</ng-container>

@@ -1,0 +1,67 @@
+<ng-container *ngIf="isNew else notNew">
+  <label *ngIf="isUnicast">
+    short address:
+    <input type="number"
+           maxlength="5"
+           min="1"
+           max="65534"
+           [(ngModel)]="destAddress"
+           (input)="updateUnicastAddress()">
+  </label>
+  <br>
+  <label *ngIf="!isUnicast">all rpl router:
+    <input type="radio"
+           name="scope"
+           [(ngModel)]="isAllRplRouter"
+           [value]="true"
+           (input)="updateMulticastAddress()"
+           checked>
+  </label>
+  <label *ngIf="!isUnicast">all coAp nodes:
+    <input type="radio"
+           name="scope"
+           [(ngModel)]="isAllRplRouter"
+           [value]="false"
+           (input)="updateMulticastAddress()">
+  </label>
+  <br>
+  <label>
+    Hop limit:
+    <input type="number"
+           maxlength="2"
+           min="1"
+           max="99"
+           [(ngModel)]="packet.v6Header.hopLimit"
+           (change)="checkHopLimit()">
+  </label>
+  <label>
+    Protocol:
+    <input type="number"
+           maxlength="2"
+           min="1"
+           max="99"
+           [(ngModel)]="packet.payload.protocol"
+           (change)="checkProtocol()">
+  </label>
+  <br>
+  <label>
+    Payload:
+    <input type="text"
+           [(ngModel)]="packet.payload.payload"
+           (input)="countPayload()">
+  </label>
+  <br>
+  <ng-container [ngTemplateOutlet]="notNew"></ng-container>
+</ng-container>
+
+
+<ng-template #notNew>
+  <label>Tag: {{packet.packetTag}}</label><br>
+  <label>Origin: {{packet.v6Header.sourceAddress}}</label><br>
+  <label>Destination: {{packet.v6Header.destAddress}}</label><br>
+  <label>Hop-Limit: {{packet.v6Header.hopLimit}}</label><br>
+  <label>Protocol: {{packet.payload.protocol}}</label><br>
+  <label>Payload: {{packet.payload.payload}}</label><br>
+  <label>(length: {{packet.payload.payload.length}})</label><br>
+  <label>(response: {{packet.response}})</label><br>
+</ng-template>

@@ -1,0 +1,9 @@
+<h6>Receive Frames</h6>
+<div *ngIf="inds">
+  <div *ngFor="let ind of inds">
+    <label>Source: panId: {{ind.sourcePanId}} address: {{ind.sourceAddress}}</label><br>
+    <label>Destination: panId: {{ind.destPanId}} address: {{ind.destAddress}}</label><br>
+    <label>Body: {{ind.data}}</label><br>
+    <label>Quality: {{ind.quality}}</label>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<h4>Device:{{macId.channel}}/{{macId.panId}}/{{macId.address}} </h4>
+<ul>
+  <li>
+    <a target="_blank"
+       [routerLink]="['mac/', macId.channel, macId.panId, macId.address]">
+      send and receive frames
+    </a>
+  </li>
+  <li>
+    <a target="_blank"
+       [routerLink]="['lpan/', macId.channel, macId.panId, macId.address, 'serial']">
+      send and receive packets
+    </a>
+  </li>
+  <li>
+    <a target="_blank"
+       [routerLink]="['p2p/', macId.channel, macId.panId, macId.address, 'serial']">
+      explore rpl point to point discovery
+    </a>
+  </li>
+</ul>
