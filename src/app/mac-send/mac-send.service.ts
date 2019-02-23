@@ -21,7 +21,6 @@ export class MacSendService {
   }
 
   sendMacFrames(macUrl: string, frames: MacFrame[]): Observable<any> { // returns <string> | <error>
-console.log('MAC DA');
     const url = this.urlService.httpUrl + 'mac/' + macUrl;
     return this.http.post(url, JSON.stringify(frames), observeOptions)
       .pipe(catchError(this.onSendError));

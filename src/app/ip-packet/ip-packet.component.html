@@ -46,14 +46,17 @@
   <br>
   <label>
     Payload:
-    <input type="text"
-           [(ngModel)]="packet.payload.payload"
-           (input)="countPayload()">
+    <br>
+    <textarea
+      rows="4"
+      cols="50"
+      maxlength="1000"
+      [(ngModel)]="packet.payload.payload"
+      (input)="countPayload()">
+  </textarea>
   </label>
   <br>
-  <ng-container [ngTemplateOutlet]="notNew"></ng-container>
 </ng-container>
-
 
 <ng-template #notNew>
   <label>Tag: {{packet.packetTag}}</label><br>

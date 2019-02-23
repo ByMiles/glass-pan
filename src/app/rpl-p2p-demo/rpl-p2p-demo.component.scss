@@ -1,0 +1,26 @@
+.p2pContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "left right"
+    "down down";
+}
+
+.p2pSend {
+  grid-area: left;
+  border-style: solid;
+  overflow: auto;
+}
+
+.p2pRec {
+  grid-area: right;
+  border-style: solid;
+  overflow: auto;
+}
+
+.p2pTables {
+  grid-area: down;
+  border-style: solid;
+  overflow: auto;
+}

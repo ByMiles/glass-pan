@@ -42,7 +42,7 @@ export class MacSendComponent implements OnInit {
 
   sendFrames(): void {
     const nextFrames = [];
-    this.bodies.forEach((value, index, array) => {
+    this.bodies.forEach((value) => {
       const aFrame = new MacFrame();
       aFrame.destPanId = this.destPanId;
       aFrame.destAddress = this.destAddress;
@@ -62,5 +62,9 @@ export class MacSendComponent implements OnInit {
       this.failedFrames = lastFrames;
     }
     this.failedStatus = status;
+  }
+
+  trackByFn(index: any, item: any) {
+    return index;
   }
 }

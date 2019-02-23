@@ -3,7 +3,14 @@
   <div *ngFor="let ind of inds">
     <label>Source: panId: {{ind.sourcePanId}} address: {{ind.sourceAddress}}</label><br>
     <label>Destination: panId: {{ind.destPanId}} address: {{ind.destAddress}}</label><br>
-    <label>Body: {{ind.data}}</label><br>
+    <label>Body:
+      <br>
+      <textarea
+        rows="4"
+        cols="50"
+        readonly>
+        {{ind.data}}
+  </textarea></label><br>
     <label>Quality: {{ind.quality}}</label>
   </div>
 </div>

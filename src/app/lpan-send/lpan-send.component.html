@@ -1,4 +1,4 @@
-<h6>new packet</h6>
+<h4>new packet</h4>
 <label>Select scope:</label><br>
 <label>unicast
   <input type="radio"
@@ -35,8 +35,8 @@
 <button (click)="tryTransformAndSend()">transform + send</button>
 <br>
 <label>Status: {{transformResponse}}</label>
-<h6>Frames ready to send</h6>
 <ng-container *ngIf="framesReady">
+  <h4>Frames ready to send</h4>
   <button (click)="trySendFrames()">Send</button>
 </ng-container>
 <h6>Last transformed Packet</h6>

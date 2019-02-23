@@ -6,8 +6,17 @@
   <input name="address" type="number" min="0" max="65354" step="1" [(ngModel)]="destAddress">
 </label><br>
 <label>Bodies:</label><br>
-<div *ngFor="let body of bodies">
-  <label><input type="text" size="100" [(ngModel)]="body"></label>
+<div *ngFor="let body of bodies; let i = index; trackBy:trackByFn">
+  <label>
+    <br>
+    <textarea
+      rows="4"
+      cols="50"
+      maxlength="127"
+      [(ngModel)]="bodies[i]">
+  </textarea>
+  </label>
+  <br>
 </div>
 <button name="addFrame" (click)="addBody()">Add Frame</button>
 <button name="sendFrames" (click)="sendFrames()">Send</button><br>

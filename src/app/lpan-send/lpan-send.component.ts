@@ -124,12 +124,12 @@ export class LpanSendComponent implements OnInit {
           this.newPacket,
           this.onTransformAndSendConfirmation.bind(this));
       } else {
-        console.log('HIER!');
         this.lpanService.trySendAsFrames(
           this.macUrl,
           this.newPacket,
           this.onTransformAndSendConfirmation.bind(this));
       }
+      this.newPacket.payload.payload = B64Util.b64ToUnicode(this.newPacket.payload.payload);
     }
   }
 
@@ -137,5 +137,6 @@ export class LpanSendComponent implements OnInit {
     console.log('DAA: ' + composed.response);
     this.sendResponse = composed.response;
     this.lastPacket = composed;
+    this.lastPacket.payload.payload = B64Util.b64ToUnicode(this.lastPacket.payload.payload);
   }
 }

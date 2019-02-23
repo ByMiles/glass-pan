@@ -2,13 +2,17 @@
 <label>Domain:
   <input name="host" [(ngModel)]="desc.domain">
 </label>
+<br>
 <label>Http port:
   <input name="rest" type="number" min="0" max="65354" step="1" size="5" [(ngModel)]="desc.httpPort">
 </label>
+<br>
 <label>WebSocket port:
   <input name="socket" type="number" min="0" max="65354" step="1" size="5" [(ngModel)]="desc.wsPort">
-</label><br>
+</label>
+<br>
 <button (click)="updateDesc()">Update</button>
+<br>
 <label>Urls in use:</label><br>
 <label>{{httpUrl}}</label><br>
 <label>{{wsUrl}}</label><br>

@@ -1,4 +1,4 @@
-<h6>RoutingTable</h6>
+<h4>Supported Paths</h4>
 <table>
   <tr>
     <th>
@@ -17,24 +17,7 @@
      Rank
     </th>
   </tr>
-  <tr>
-    <td>
-      1
-    </td>
-    <td>
-      2
-    </td>
-    <td>
-      3
-    </td>
-    <td>
-      4
-    </td>
-    <td>
-      5
-    </td>
-  </tr>
-  <tr *ngFor="let entry of rootEntries">
+   <tr *ngFor="let entry of rootEntries">
     <td>
       {{entry.rootAddress}}
     </td>
@@ -86,7 +69,7 @@
     </td>
   </tr>
 </table>
-<h6>Neighbour qualities</h6>
+<h4>Neighbour qualities</h4>
 <table>
   <tr>
     <th>link address</th>
