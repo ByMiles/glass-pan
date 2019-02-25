@@ -67,11 +67,8 @@ export class RplP2pDemoComponent implements OnInit {
 
   startDiscovery() {
     if (this.isValid) {
-      console.log('discover ' + this.target);
       this.startTime = Date.now();
       this.p2p.discover(this.target, this.onDiscoveryEnd.bind(this));
-    } else {
-      console.log('not valid');
     }
   }
 
@@ -106,18 +103,15 @@ export class RplP2pDemoComponent implements OnInit {
   }
 
   onTargetDiscovered(target: string, isFound: boolean) {
-    console.log('... handler ' + isFound);
     if (isFound) {
       const packets = this.openMessages.get(target);
       if (packets != null) {
-        console.log('LETS GO');
         packets.forEach(storedPacket => {
           storedPacket.v6Header.hopLimit = this.tableService.getHopLimit(
             storedPacket.v6Header.sourceAddress,
             storedPacket.v6Header.destAddress
           );
           if (storedPacket.v6Header.hopLimit != null) {
-            console.log('LETS GO GO');
             this.ipService.trySendPacket(
               storedPacket,
               (respondedPacket => {
@@ -131,13 +125,10 @@ export class RplP2pDemoComponent implements OnInit {
           }
         });
       }
-    } else {
-      console.log('target not found');
     }
   }
 
   private handleUdpIndication(nextDatagram: IpPacket) {
-    console.log('da simma...');
     const message = B64Util.b64ToUnicode(UdpGenerator.udpMessage(nextDatagram.payload));
     this.indicationLog.push({source: nextDatagram.v6Header.sourceAddress, message: message});
     this.ref.detectChanges();

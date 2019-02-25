@@ -21,11 +21,9 @@ export class MacReceiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('subscribe: ' + this.macUrl);
-    this.indSubscriptions = this.receiveService.subscribeMacIndications(this.macUrl)
+   this.indSubscriptions = this.receiveService.subscribeMacIndications(this.macUrl)
       .subscribe(ind => {
           if (ind == null) {
-            console.log('received ' + ind);
           } else {
             ind.data = B64Util.b64ToUnicode(ind.data);
             this.inds.push(ind);
@@ -38,7 +36,6 @@ export class MacReceiveComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.indSubscriptions.unsubscribe();
-    console.log('unSubscribe: ' + this.macUrl);
   }
 }
 

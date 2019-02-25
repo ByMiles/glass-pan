@@ -33,7 +33,6 @@ export class RplP2pDemoService {
     this.udpIndications = new Subject<IpPacket>();
     this.ipService.packetIndications.asObservable().subscribe(
       next => {
-        console.log('indication');
         this.handleIndication(next);
       }
     );
@@ -43,26 +42,21 @@ export class RplP2pDemoService {
     address: string,
     onFindStatus: ((address: string, found: boolean) => void)
   ): void {
-    console.log('DISCOVER_: 1');
     if (this.tableService.hasRoute(address)) {
       onFindStatus(address, true);
 
-      console.log('DISCOVER_: 2');
     } else if (this.callbackMap.has(address)) {
       this.callbackMap.get(address).push(onFindStatus);
     } else {
 
-      console.log('DISCOVER_: 3');
       const entry = new RoutingTableEntry();
       entry.rootAddress = this.tableService.interfaceId;
       entry.rplId = this.rplId;
       entry.childAddress = address;
       entry.routeKey = entry.rootAddress + '/' + entry.childAddress;
 
-      console.log('DISCOVER_: 4');
       if (this.tableService.discoverAsRoot(entry)) {
 
-        console.log('DISCOVER_: 5');
         const callbackList = [];
         callbackList.push(onFindStatus);
         this.callbackMap.set(address, callbackList);
@@ -104,7 +98,6 @@ export class RplP2pDemoService {
   }
 
   private handleUdpIndication(udpPacket: IpPacket) {
-    console.log('handle udp ');
     if (udpPacket.v6Header.destAddress === this.tableService.interfaceId
       || udpPacket.v6Header.destAddress === ALL_RPL_ROUTER) {
       this.udpIndications.next(udpPacket);
@@ -162,7 +155,6 @@ export class RplP2pDemoService {
       const addressList = this.rplGenerator.getAddressListFromDiscoveryOptionInDio(decoded);
 
       if (addressList.includes(this.tableService.interfaceId)) {
-        console.log('p2p dio address-list includes this address');
         return;
       }
 
@@ -176,7 +168,6 @@ export class RplP2pDemoService {
         .create(this.tableService.macId, packetInd.linkHeader.linkSource);
 
       if (this.tableService.joinAsChild(entry)) {
-        console.log('joined ' + entry.routeKey + ' as child with rank ' + entry.rankHigh);
         const packet = new IpPacket();
         packet.v6Header = new IpHeader();
         packet.v6Header.sourceAddress = entry.childAddress;
@@ -192,11 +183,7 @@ export class RplP2pDemoService {
         packet.v6Header.hopLimit = packetInd.v6Header.hopLimit - 1;
         packet.payload = this.rplGenerator.parentPathDiscoveryDio(decoded, this.tableService.interfaceId);
         this.ipService.trySendPacket(packet, this.onSentParentDiscoveryDio.bind(this));
-      } else {
-        console.log('p2p dio nothing to do');
       }
-    } else {
-      console.log('p2p dio no usable information');
     }
   }
 
@@ -205,7 +192,6 @@ export class RplP2pDemoService {
       const entry = new RoutingTableEntry();
       const compression = this.rplGenerator.getCompressionFromDiscoveryOptionInDro(decoded);
       if (compression !== 14) {
-        console.log('unsupported compression mode in p2p dro');
         return;
       }
       const nextHop = this.rplGenerator.getNextHopFromDiscoveryOptionInDro(decoded);
@@ -221,8 +207,6 @@ export class RplP2pDemoService {
       entry.linkHeaderToChild = LinkHeader.create(this.tableService.macId, packetInd.linkHeader.linkSource);
       entry.rankHigh = nextHop;
       entry.routeLength = addressList.length;
-      console.log('nextHop: ' + addressList[nextHop - 1] + ' | ' + this.tableService.interfaceId + ' | ' + addressList.length);
-      console.log('list: ' + addressList.toLocaleString());
       if (this.tableService.joinAsRoot(entry)) {
         this.onJoinAsRoot(target);
       } else if (this.tableService.interfaceId === addressList[nextHop - 1]
@@ -234,20 +218,14 @@ export class RplP2pDemoService {
         packet.v6Header.hopLimit = packetInd.v6Header.hopLimit - 1;
         packet.payload = this.rplGenerator.parentPathDiscoveryDro(decoded);
         this.ipService.trySendPacket(packet, this.onSentParentDiscoveryDro.bind(this));
-      } else {
-        console.log('p2p dro nothing to do');
       }
-    } else {
-      console.log('p2p dro discovery option is missing');
     }
   }
 
   private onJoinAsRoot(target: string) {
-    console.log('discovered ' + target + ' ' + this.callbackMap.has(target));
     if (this.callbackMap.has(target)) {
       this.callbackMap.get(target).forEach(
         value => {
-          console.log('callback...');
           value(target, true);
         });
       this.callbackMap.delete(target);

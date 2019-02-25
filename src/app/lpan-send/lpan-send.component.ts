@@ -43,7 +43,6 @@ export class LpanSendComponent implements OnInit {
     this.macUrl = macIdAsUrl(this.macId);
     this.initLinkHeader();
     this.initNewPacket();
-    console.log('isDemo: ' + this.isDemo);
   }
 
   private initNewPacket() {
@@ -134,7 +133,6 @@ export class LpanSendComponent implements OnInit {
   }
 
   onTransformAndSendConfirmation(composed: IpPacket): void {
-    console.log('DAA: ' + composed.response);
     this.sendResponse = composed.response;
     this.lastPacket = composed;
     this.lastPacket.payload.payload = B64Util.b64ToUnicode(this.lastPacket.payload.payload);

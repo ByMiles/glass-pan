@@ -23,8 +23,6 @@ export class MacReceiveService {
   private routeIndications(data: string, macUrl: string) {
     if (data.startsWith('{')) {
       return JSON.parse(data);
-    } else {
-      console.log('mac-Indication message: ' + data);
     }
   }
 }

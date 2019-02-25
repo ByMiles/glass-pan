@@ -25,7 +25,6 @@ export class B64Util {
     Array.prototype.forEach.call(binStr,  (ch, i) => {
       buf[i] = ch.charCodeAt(0);
     });
-    console.log('to buffer: ' + buf.toLocaleString());
     return buf;
   }
 
@@ -33,7 +32,6 @@ export class B64Util {
     const binStr = Array.prototype.map.call(buf, function (ch) {
       return String.fromCharCode(ch);
     }).join('');
-    console.log('from buffer: ' + buf.toLocaleString());
     return btoa(binStr);
   }
 }

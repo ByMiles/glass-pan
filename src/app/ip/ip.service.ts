@@ -47,10 +47,8 @@ export class IpService {
 
   trySendPacket(packet: IpPacket, onConfirmation: ((packet: IpPacket) => void)) {
 
-    console.log('DISCOVER_: 6');
     if (!(packet.payload.payload.length < 8)
       && (packet.linkHeader = this.tableService.getLinkHeader(packet.v6Header.sourceAddress, packet.v6Header.destAddress)) != null) {
-        console.log('DISCOVER_: 7 ' + packet.linkHeader.linkSource + ' => ' + packet.linkHeader.linkDestination);
       if (this.isDemo) {
         this.demoService.trySendPacket(
           packet,
@@ -61,14 +59,11 @@ export class IpService {
           packet,
           onConfirmation);
       }
-    } else {
-      console.log('INVALID: ' + packet.payload.payload.length + ' | ' + packet.linkHeader);
     }
   }
 
   private subscribeDemoIndications() {
-    console.log('SUBSCRIBED DEMO INDS');
-    this.demoService.subscribePacketIndications(this.macId)
+   this.demoService.subscribePacketIndications(this.macId)
       .subscribe(
         nextPacket => this.onPacketIndication(nextPacket)
       );

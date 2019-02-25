@@ -22,7 +22,6 @@ export class DemoService {
   demoQualities: BehaviorSubject<number[]>;
 
   constructor(private tableService: RoutingTableService) {
-    console.log('FRESH OUT');
     this.isMaster = false;
     this.startChannel = new BroadcastChannel('start');
     this.startChannel.onmessage = this.onStart.bind(this);
@@ -68,7 +67,6 @@ export class DemoService {
   }
 
   setLocalLink(link: string): void {
-    console.log('set llink: ' + link);
     if (this.isMaster && !this.localLinks.has(link)) {
       this.localLinks.set(link, 150);
       this.linkChannel.postMessage(this.localLinks);
@@ -90,8 +88,6 @@ export class DemoService {
       (composed: IpPacket) => void)
   ): void {
     const linkKey = linkHeaderAsLinkUrl(packet.linkHeader);
-    console.log('send: ' + linkKey);
-    console.log('links: ' + this.localLinks.toLocaleString());
     if (this.localLinks.has(linkKey)
       || packet.linkHeader.linkDestination === 0xffff) {
       this.packetChannel.postMessage(packet);

@@ -16,8 +16,7 @@ function cutShortAddressFromUnicast(address: string): number {
 }
 
 function cutShortAddressDecoded(decoded: Uint8Array, position): number {
-  console.log('cut short: ' + decoded.length + ' / ' + position + ' => ' + ((decoded[position] << 8) + decoded[position + 1]));
-  return (decoded[position] << 8) + decoded[position + 1];
+ return (decoded[position] << 8) + decoded[position + 1];
 }
 
 function generateUnicastFromShortAddress(shortAddress: number): string {
@@ -52,7 +51,6 @@ function addDodagId(address: string, buffer: Uint8Array, index: number): void {
 function createFreshOption(targetAddress: string): Uint8Array {
   const option = new Uint8Array(6);
   const shortAddress = cutShortAddressFromUnicast(targetAddress);
-  console.log('target 1: ' + targetAddress + ' | ' + shortAddress);
   option[0] = RPL_OPTION_TYPE_P2P_RDO; // 28
   option[1] = 4; // length without type and length
   option[2] = 0b1100_1110; // |reply|hopByHop|routes(2)|compr(4)|
@@ -66,7 +64,6 @@ function createFreshOption(targetAddress: string): Uint8Array {
 function createP2PDroRdoOption(targetAddress: string, addressList: string[], nextHop: number) {
   const option = new Uint8Array(6 + addressList.length * 2);
   const shortAddress = cutShortAddressFromUnicast(targetAddress);
-  console.log('next hop set: ' + nextHop);
   option[0] = RPL_OPTION_TYPE_P2P_RDO; // 24
   option[1] = 4 + addressList.length * 2; // length without type and length
   option[2] = 0b1100_1110; // |reply|hopByHop|routes(2)|compr(4)|
@@ -77,7 +74,6 @@ function createP2PDroRdoOption(targetAddress: string, addressList: string[], nex
   let optionPointer = 6;
   for (const address of addressList) {
     const aShortAddress = cutShortAddressFromUnicast(address);
-    console.log('child dro addresss ' + aShortAddress + ' <= ' + address);
     option[optionPointer++] = aShortAddress >> 8;
     option[optionPointer++] = aShortAddress & 0xff;
   }
@@ -131,8 +127,6 @@ export class RplP2PGenerator {
 
   getTargetFromDiscoveryOptionInDio(decoded: Uint8Array) {
 
-    console.log('target 2: ' + (UNICAST_PREFIX + ((decoded[32] << 8) + decoded[33]).toString(16))
-      + ' | ' + ((decoded[32] << 8) + decoded[33]));
     return UNICAST_PREFIX + ((decoded[32] << 8) + decoded[33]).toString(16);
   }
 
@@ -141,9 +135,7 @@ export class RplP2PGenerator {
   }
 
   getAddressListFromDiscoveryOptionInDio(decoded: Uint8Array): string[] {
-    console.log('addressList: ...');
     const addressCount = (decoded[29] - 4) / 2;
-    console.log(decoded[29] + ' => ' + addressCount);
     if (addressCount === 0) {
       return [];
     } else {
@@ -152,9 +144,7 @@ export class RplP2PGenerator {
       const list = [];
       for (let listPosition = listStart; listPosition < listEnd; listPosition += 2) {
         list.push(generateUnicastFromShortAddress(cutShortAddressDecoded(decoded, listPosition)));
-      console.log(' => ' + (list[list.length - 1]));
       }
-      console.log(' ... ' + list.length);
       return list;
     }
   }
@@ -217,7 +207,6 @@ export class RplP2PGenerator {
       const list = [];
       for (let listPosition = listStart; listPosition < listEnd; listPosition += 2) {
         list.push(generateUnicastFromShortAddress(cutShortAddressDecoded(decoded, listPosition)));
-      console.log(' from dro: ' + list[list.length - 1]);
       }
       return list;
     }
@@ -228,7 +217,6 @@ export class RplP2PGenerator {
   }
 
   getNextHopFromDiscoveryOptionInDro(decoded: Uint8Array) {
-    console.log('next hop get: ' + (decoded[27] & 0b0011_1111));
     return decoded[27] & 0b0011_1111;
   }
 

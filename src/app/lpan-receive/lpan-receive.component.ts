@@ -33,7 +33,6 @@ export class LpanReceiveComponent implements OnInit {
       this.demoService.subscribePacketIndications(this.macId)
         .subscribe(
           nextInd => {
-            console.log('pushed ind');
       this.receivedPackets.push(nextInd);
             this.ref.detectChanges();
     });
@@ -48,7 +47,6 @@ export class LpanReceiveComponent implements OnInit {
   }
 
   private onMacInd(nextInd: MacIndication): void {
-    console.log('mac indication ' + this.macUrl);
     if (nextInd != null) {
       const frame = new LpanDataFrame();
       frame.linkHeader = new LinkHeader();
@@ -57,7 +55,6 @@ export class LpanReceiveComponent implements OnInit {
       frame.linkHeader.channel = this.macId.channel;
       frame.linkHeader.linkSource = nextInd.sourceAddress;
       frame.data = nextInd.data;
-      console.log('frame data: ' + frame.data);
       this.lpanService.tryComposePacket(this.macUrl, frame, this.onComposedPacket.bind(this));
     }
   }
@@ -68,9 +65,7 @@ export class LpanReceiveComponent implements OnInit {
 
   private onComposedPacket(frame: LpanDataFrame,
                              packet: IpPacket): void {
-console.log('composed arrived');
     if (packet.payload != null) {
-      console.log('composed has payload: ' + packet.payload.payload + ' ' + (packet.linkHeader != null));
       packet.payload.payload = B64Util.b64ToUnicode(packet.payload.payload);
       this.receivedPackets.push(packet);
     } else {

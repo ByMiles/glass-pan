@@ -27,7 +27,6 @@ export class LpanReceiveService {
   }
 
   start(macId: MacId) {
-    console.log('start called');
     this.macId = macId;
     this.macUrl = macIdAsUrl(macId);
     this.macService.subscribeMacIndications(this.macUrl)
@@ -99,7 +98,6 @@ export class LpanReceiveService {
                            packet: IpPacket): void {
 
     if (packet.payload != null) {
-      console.log('composed packet arrived ' + (packet.linkHeader != null));
       this.receivedPackets.next(packet);
     }
   }

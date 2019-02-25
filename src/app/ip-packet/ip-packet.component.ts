@@ -43,7 +43,6 @@ export class IpPacketComponent implements OnInit {
   }
 
   updateUnicastAddress() {
-    console.log('input :' + this.destAddress);
     if (this.destAddress > 0 && this.destAddress < 65535) {
       const identifier = (this.destAddress).toString(16);
       this.packet.v6Header.destAddress = UNICAST_PREFIX + identifier;

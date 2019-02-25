@@ -14,7 +14,6 @@ export class MacComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('mac component init');
     this.macUrl = this.route.snapshot.paramMap.get('channel') + '/'
       + this.route.snapshot.paramMap.get('panId') + '/'
       + this.route.snapshot.paramMap.get('address');
